@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: recruit-web
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.17.1:32768/RecruitmentPlatform?useSSL=false&serverTimezone=UTC
+    username: root
+    password: Luchen1122
+
+server:
+  port: 8080
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+logging:
+  level:
+    sql: debug
+    com.aprdec.recruitweb: debug
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
