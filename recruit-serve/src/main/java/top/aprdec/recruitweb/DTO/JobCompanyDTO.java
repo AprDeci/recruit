@@ -1,7 +1,11 @@
 package top.aprdec.recruitweb.DTO;
 
-import java.time.LocalDate;
+import jakarta.annotation.PostConstruct;
+import lombok.Data;
+import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDate;
+@Data
 public class JobCompanyDTO {
 
     private String company_name;
@@ -11,6 +15,8 @@ public class JobCompanyDTO {
     private String company_location;
 
     private String company_industry;
+
+    private String job_id;
 
     private String job_title;
 
@@ -28,4 +34,12 @@ public class JobCompanyDTO {
 
     private String job_type;
 
+    private String salary;
+
+    private String[] tags;
+
+    public void initst(){
+        this.tags=this.job_requirements.split(",");
+        this.salary= (int)Math.floor((double) this.maxSalary/1000) + "K-" +(int) Math.floor((double) this.minSalary/1000)+"K";
+    }
 }

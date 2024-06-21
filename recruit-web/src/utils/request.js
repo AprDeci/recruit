@@ -12,6 +12,9 @@ instance.interceptors.request.use(config => {
     if (tokenStore.token) {
         config.headers['Authorization'] = tokenStore.token
     }
+    if (config.url.indexOf("ak") > -1) {
+        config.baseURL = "";
+      }
     return config
 }, error => {
      Promise.reject(error)

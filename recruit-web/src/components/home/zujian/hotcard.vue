@@ -1,6 +1,8 @@
 <script setup>
 import { ref,onMounted } from 'vue';
 
+
+
 const props = defineProps({
     job:Object
 })
@@ -8,7 +10,7 @@ const tags=ref([])
 const salary=ref('')
 
 const gettags = ()=>{
-   const requirements = props.job.requirements;
+   const requirements = props.job.job_requirements;
    const requirementArray = requirements.split(',');
    tags.value = requirementArray;
 const maxSalary = Math.floor(props.job.maxSalary/ 1000) ;
@@ -26,15 +28,12 @@ onMounted(()=>{
 
 
 <template>
-    <el-card shadow="hover" style="cursor: pointer;">
-        <div class="nameandsalary"><span class="name">{{ job.title }}</span><span class="salary">{{ salary }}</span></div>
-            <!-- <el-tag  color="#fff" size="small">{{ job.location }}</el-tag>
-            <el-tag color="#fff" size="small">{{job.requirements}}</el-tag>
-            <el-tag color="#fff" size="small">{{job.postingDate}}</el-tag> -->
+    <el-card shadow="hover" style="cursor: pointer;" @click="$router.push({path:`/job_detail/${job.job_id}`})">
+        <div class="nameandsalary"><span class="name">{{ job.job_title }}</span><span class="salary">{{ salary }}</span></div>
             <el-tag color="#fff" size="small" v-for="tag in tags" :key="tag">{{tag}}</el-tag>
         <template #footer>
-            <div class="foot" style="display: flex; justify-content: space-between;"><span class="footertext">公司名称</span>
-            <span class="footertext">{{ job.location }}</span>
+            <div class="foot" style="display: flex; justify-content: space-between;"><span class="footertext">{{ job.company_name }}</span>
+            <span class="footertext">{{ job.job_location }}</span>
             </div>
         </template>
     </el-card>

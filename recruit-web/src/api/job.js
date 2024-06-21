@@ -22,3 +22,9 @@ export const deletejobByidService = (id)=>{
 export const getjobListByRandomService = (limit)=>{
     return request.get('/jobPosting/getrand/'+limit)
 }
+export const getJobCompanyByRandomService = (limit)=>{
+    return request.get('/jobPosting/getjcDto',{params:{limit}})
+}
+export const getJobCompanyByIdService = (id)=>{
+    return request.get('/jobPosting/getjcDto/'+id)
+}

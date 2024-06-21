@@ -9,12 +9,14 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
+import top.aprdec.recruitweb.DTO.JobCompanyDTO;
 import top.aprdec.recruitweb.DTO.PageDto;
 import top.aprdec.recruitweb.mapper.JobPostingMapper;
 import top.aprdec.recruitweb.pojo.Employer;
 import top.aprdec.recruitweb.pojo.JobPosting;
 import top.aprdec.recruitweb.pojo.ResultData;
 import top.aprdec.recruitweb.service.JobPostingService;
+import top.aprdec.recruitweb.util.DTOUtil;
 import top.aprdec.recruitweb.util.ThreadLocalUtil;
 
 import javax.xml.transform.Result;
@@ -99,6 +101,19 @@ public class JobPostingController {
     public ResultData getListByRand(@PathVariable("limit")int limit){
         List<JobPosting> list = jobPostingMapper.getJobListByRandom(limit);
         return ResultData.success(list);
+    }
+
+    @GetMapping("/getjcDto")
+    public ResultData JobCompanyDTOByrandom(@RequestParam("limit")int limit){
+        List<JobCompanyDTO> list = jobPostingMapper.getJobAndCompanyByRandom(limit);
+        DTOUtil.JobCompanyDTOinitst(list);
+        return ResultData.success(list);
+    }
+    @GetMapping("/getjcDto/{id}")
+    public ResultData JobCompanyDTOById(@PathVariable("id")int id){
+        JobCompanyDTO jcdto = jobPostingMapper.getJobAndCompanyById(id);
+        DTOUtil.JobCompanyDTOinitst(jcdto);
+        return ResultData.success(jcdto);
     }
 
 }

@@ -37,7 +37,7 @@ onUnmounted(() => {
             <el-row>
                 <searchinput></searchinput>
             </el-row>
-            <div class="mainhome inner">
+            <div class="main inner">
             <div class="sortads">
             <div class="sort" style="margin-right: 10px;"><jobsorts/></div>
             <div class="ads"><adcard></adcard></div>
@@ -84,7 +84,7 @@ onUnmounted(() => {
   z-index: 999;
   width: 100%;
 }
-.mainhome{
+.main{
   max-width: 1300px;
 }
 .inner{

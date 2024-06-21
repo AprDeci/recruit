@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import top.aprdec.recruitweb.DTO.JobCompanyDTO;
+import top.aprdec.recruitweb.DTO.JobRecordDTO;
 import top.aprdec.recruitweb.pojo.JobPosting;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -35,7 +36,6 @@ public interface JobPostingMapper extends BaseMapper<JobPosting> {
 
 
 
-    @Select("SELECT c.name AS company_name, c.description AS company_description, c.location AS company_location, c.industry AS company_industry, j.title AS job_title, j.description AS job_description, j.requirements AS job_requirements, j.location AS job_location, j.posting_date AS job_postingDate, j.max_salary AS maxSalary, j.min_salary AS minSalary, j.type AS job_type FROM job_posting j JOIN company c ON j.company_id = c.id WHERE j.id = #{id} ORDER BY RAND() LIMIT #{limit}")
     @Results({
             @Result(column = "company_name", property = "company_name"),
             @Result(column = "company_description", property = "company_description"),
@@ -48,8 +48,29 @@ public interface JobPostingMapper extends BaseMapper<JobPosting> {
             @Result(column = "job_postingDate", property = "job_postingDate"),
             @Result(column = "maxSalary", property = "maxSalary"),
             @Result(column = "minSalary", property = "minSalary"),
-            @Result(column = "job_type", property = "job_type")
+            @Result(column = "job_type", property = "job_type"),
+            @Result(column = "job_id", property = "job_id")
     })
-    JobCompanyDTO getJobAndCompanyById(@Param("id") int jobPostingId,@Param("limit") int limit);
+    @Select("SELECT c.name AS company_name, c.description AS company_description, c.location AS company_location, c.industry AS company_industry, j.title AS job_title, j.description AS job_description, j.requirements AS job_requirements, j.location AS job_location, j.posting_date AS job_postingDate, j.max_salary AS maxSalary, j.min_salary AS minSalary, j.type AS job_type, j.id AS job_id FROM job_posting j JOIN company c ON j.company_id = c.id  ORDER BY RAND() LIMIT #{limit}")
+    List<JobCompanyDTO> getJobAndCompanyByRandom(@Param("limit") int limit);
+
+
+    @Results({
+            @Result(column = "company_name", property = "company_name"),
+            @Result(column = "company_description", property = "company_description"),
+            @Result(column = "company_location", property = "company_location"),
+            @Result(column = "company_industry", property = "company_industry"),
+            @Result(column = "job_title", property = "job_title"),
+            @Result(column = "job_description", property = "job_description"),
+            @Result(column = "job_requirements", property = "job_requirements"),
+            @Result(column = "job_location", property = "job_location"),
+            @Result(column = "job_postingDate", property = "job_postingDate"),
+            @Result(column = "maxSalary", property = "maxSalary"),
+            @Result(column = "minSalary", property = "minSalary"),
+            @Result(column = "job_type", property = "job_type"),
+            @Result(column = "job_id", property = "job_id")
+    })
+    @Select("SELECT c.name AS company_name, c.description AS company_description, c.location AS company_location, c.industry AS company_industry, j.title AS job_title, j.description AS job_description, j.requirements AS job_requirements, j.location AS job_location, j.posting_date AS job_postingDate, j.max_salary AS maxSalary, j.min_salary AS minSalary, j.type AS job_type, j.id AS job_id FROM job_posting j JOIN company c ON j.company_id = c.id WHERE j.id = #{jid}")
+    JobCompanyDTO getJobAndCompanyById(@Param("jid")int jid);
 
 }

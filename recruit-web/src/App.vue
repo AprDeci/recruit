@@ -4,6 +4,6 @@ import "@/color.css"
 </script>
 
 <template>
-<RouterView></RouterView>
+<RouterView :key="$route.fullPath"></RouterView>
 </template>
 

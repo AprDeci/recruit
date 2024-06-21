@@ -9,6 +9,12 @@ export const fixedRouter = [
         component: () => import('../view/home/home.vue')
     },
     {
+        path: '/job_detail/:id',
+        name: 'job_detail',
+        component: () => import('../view/home/jobdetail.vue'),
+        props:true
+    },
+    {
         path:'/login',
         name:'login',
         component: () => import('../view/login/login.vue')

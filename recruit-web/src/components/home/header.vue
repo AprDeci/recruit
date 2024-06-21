@@ -42,9 +42,9 @@ const logout = ()=>{
     </div>
 
       <div class="center">  
-        <el-menu-item index="1"><span>首页</span></el-menu-item>
-      <el-menu-item index="2"><span>关于我们</span></el-menu-item>
-      <el-menu-item index="3"><span>联系我们</span></el-menu-item>
+        <el-menu-item index="/"><span>首页</span></el-menu-item>
+      <el-menu-item index="/about"><span>关于我们</span></el-menu-item>
+      <el-menu-item index="/contact"><span>联系我们</span></el-menu-item>
     </div>
       <el-menu-item index="/login" v-if="isgoin"><span>登陆/注册</span></el-menu-item>
       <el-menu-item  v-else>

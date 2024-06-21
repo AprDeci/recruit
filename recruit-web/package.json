@@ -12,10 +12,13 @@
     "@element-plus/icons-vue": "^2.3.1",
     "axios": "^1.7.2",
     "element-plus": "^2.7.5",
+    "node-pre-gyp-github": "^2.0.0",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
+    "vite-plugin-require": "^1.2.14",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.2"
+    "vue-router": "^4.3.2",
+    "vue3-baidu-map-gl": "^2.3.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",

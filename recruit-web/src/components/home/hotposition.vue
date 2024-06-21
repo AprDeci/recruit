@@ -1,7 +1,7 @@
 <script setup>
 import { ref,onMounted } from 'vue'
 import hotcard from './zujian/hotcard.vue';
-import {getjobListByRandomService} from '@/api/job'
+import {getJobCompanyByRandomService} from '@/api/job'
 const activeName = ref('first')
 
 const handleClick = (tab, event) => {
@@ -9,7 +9,7 @@ const handleClick = (tab, event) => {
 }
 const jobList=ref([])
 onMounted(()=>{
-    getjobListByRandomService(9).then(res=>{
+    getJobCompanyByRandomService(9).then(res=>{
         jobList.value=res.data
     })
 })
