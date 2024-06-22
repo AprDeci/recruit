@@ -8,8 +8,11 @@ import {addjobSerice,getjobListPageService,deletejobByidService} from '@/api/job
 const loading = ref(true)
 const userStore = useUserStore();
 const dialogFormVisible = ref(false)
+const editdialogFormVisible = ref(false)
 const address1=ref('')
 const address2=ref('')
+const editaddress1=ref('')
+const editaddress2=ref('')
 const JobList=ref([]);
 const newJobinfo=ref({
     employerId:'',
@@ -21,7 +24,21 @@ const newJobinfo=ref({
     postingDate:'',
     maxSalary:'',
     minSalary:'',
+    type:'',
 })
+// const editjobinfo=ref({
+//     employerId:'',
+//     companyId:'',
+//     title:'',
+//     description:'',
+//     requirements:'',
+//     location:'',
+//     postingDate:'',
+//     maxSalary:'',
+//     minSalary:'',
+//     type:'',
+// })
+const editjobinfo=ref({})
 const addressget=()=>{
     newJobinfo.value.location=address1.value+address2.value
     console.log(newJobinfo.value.address)
@@ -38,6 +55,10 @@ const addnewjob=()=>{
             ElMessage.error(res.msg)
         }
     })
+}
+const editjobinfomethod=(row)=>{
+    editdialogFormVisible.value=true
+    editjobinfo.value=row
 }
 
 let size=ref(10)
@@ -85,18 +106,20 @@ const deletettt = (id)=>{
     <el-button type="primary" @click="dialogFormVisible = true">添加职位</el-button>
 </div>
 
-  <el-table :data="JobList" border="true" style="width: 100%" v-loading="loading">
-    <el-table-column prop="title" label="职位名称" width="180" />
-    <el-table-column show-overflow-tooltip prop="description" label="职位描述" width="180" />
-    <el-table-column prop="requirements" label="职位要求" />
-    <el-table-column prop="location" label="工作地点" />
+  <el-table :data="JobList" border="true" style="width: 100%"v-loading="loading" :row-style="{height: '70px'}">
+    <el-table-column prop="title" label="职位名称" width="130" />
+    <el-table-column show-overflow-tooltip prop="description" label="职位描述" width="150" />
+    <el-table-column show-overflow-tooltip prop="requirements" label="职位要求" />
+    <el-table-column show-overflow-tooltip prop="location" label="工作地点" />
     <el-table-column prop="postingDate" label="截止日期" />
     <el-table-column prop="maxSalary" label="最大薪水" />
     <el-table-column prop="minSalary" label="最小薪水" />
-    <el-table-column prop="address" label="操作" >
+    <el-table-column prop="type" label="类型" />
+    <el-table-column prop="address" label="操作" width="180">
+    
         <template #default="scope">
             <div style="display:flex;justify-content:space-around;">
-            <el-button type="primary" @click="deletettt(scope.row.id)">编辑</el-button>
+            <el-button type="primary" @click="editjobinfomethod(scope.row)">编辑</el-button>
             <el-button type="danger" @click="deletettt(scope.row.id)">删除</el-button>
         </div>
         </template>
@@ -142,10 +165,18 @@ const deletettt = (id)=>{
         </el-form-item>
             </el-col>
         </el-row>
-
+    <el-row :gutter="20">
+        <el-col :span="10">
         <el-form-item label="截止日期" prop="postingDate">
             <el-date-picker formant="YYYY/MM/DD" value-format="YYYY-MM-DD" v-model="newJobinfo.postingDate" type="date" placeholder="Pick a day"/>
         </el-form-item>
+    </el-col>
+    <el-col :span="10">
+        <el-form-item label="类型">
+            <el-input v-model="newJobinfo.type" placeholder="请输入类型"></el-input>
+        </el-form-item>
+    </el-col>
+    </el-row>
         <el-row :gutter="20">
             <el-col :span="8">
                 <el-form-item label="最大薪水" prop="maxSalary">
@@ -162,6 +193,68 @@ const deletettt = (id)=>{
         <el-form-item>
             <el-button @click="addnewjob" type="primary">提交</el-button>
             <el-button @click="dialogFormVisible = false" type="warn">关闭</el-button>
+        </el-form-item>
+    </el-form>
+</div>
+</el-dialog>
+
+<el-dialog v-model="editdialogFormVisible">
+    <template #header>
+        <div>编辑职位</div>
+    </template>
+    <div style="padding: 0 50px;">
+    <el-form v-model="editjobinfo" label-position="top" size="large">
+        
+        <el-form-item label="职位名称" prop="title">
+        <el-input v-model="editjobinfo.title" placeholder="请输入职位名称"></el-input>
+        </el-form-item>
+        <el-form-item label="职位描述" prop="description">
+        <el-input v-model="editjobinfo.description" placeholder="请输入职位描述"></el-input>
+        </el-form-item>
+        <el-form-item label="职位要求" prop="requirements">
+        <el-input v-model="editjobinfo.requirements" placeholder="请输入职位要求"></el-input>
+        </el-form-item>
+        <el-row :gutter="20">
+            <el-col :span="10">
+                <el-form-item label="工作地点" prop="location">
+            <el-cascader @change="addressget" v-model="editaddress1"  filterable :options="json" :props="{checkStrictly: true,value:'name',label:'name',children:'children'}" />
+        </el-form-item>
+            </el-col>
+            <el-col :span="14">
+                
+        <el-form-item label="详细地点" @change="addressget">
+            <el-input v-model="editaddress2"></el-input>
+        </el-form-item>
+            </el-col>
+        </el-row>
+    <el-row :gutter="20">
+        <el-col :span="10">
+        <el-form-item label="截止日期" prop="postingDate">
+            <el-date-picker formant="YYYY/MM/DD" value-format="YYYY-MM-DD" v-model="editjobinfo.postingDate" type="date" placeholder="Pick a day"/>
+        </el-form-item>
+    </el-col>
+    <el-col :span="10">
+        <el-form-item label="类型">
+            <el-input v-model="editjobinfo.type" placeholder="请输入类型"></el-input>
+        </el-form-item>
+    </el-col>
+    </el-row>
+        <el-row :gutter="20">
+            <el-col :span="8">
+                <el-form-item label="最大薪水" prop="maxSalary">
+                <el-input v-model="editjobinfo.maxSalary" placeholder="请输入最大薪水"></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="8">
+                <el-form-item label="最小薪水" prop="minSalary">
+                <el-input v-model="editjobinfo.minSalary" placeholder="请输入最小薪水"></el-input>
+                </el-form-item>
+            </el-col>
+        </el-row>
+
+        <el-form-item>
+            <el-button @click="editjob()" type="primary">提交</el-button>
+            <el-button @click="editdialogFormVisible = false" type="warn">关闭</el-button>
         </el-form-item>
     </el-form>
 </div>

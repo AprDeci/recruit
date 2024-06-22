@@ -33,7 +33,7 @@ onMounted(()=>{
             <el-tag color="#fff" size="small" v-for="tag in tags" :key="tag">{{tag}}</el-tag>
         <template #footer>
             <div class="foot" style="display: flex; justify-content: space-between;"><span class="footertext">{{ job.company_name }}</span>
-            <span class="footertext">{{ job.job_location }}</span>
+            <span class="footertext">{{ job.job_location.slice(0, 2) }}</span>
             </div>
         </template>
     </el-card>

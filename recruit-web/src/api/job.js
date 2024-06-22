@@ -43,3 +43,6 @@ export const getinfoBypageByjobcompanyid = (id,size,page,type)=>{
 export const getjobinfobyidService = (id)=>{
     return request.get('/jobPosting/getjobinfo/'+id)
 }
+export const getjobtypes=()=>{
+    return request.get('/jobPosting/gettypes')
+}

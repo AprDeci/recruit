@@ -11,11 +11,11 @@
     <el-button style="padding: 25px 40px; position: relative; bottom: 4px; right: 10px;" color="#626aef" size="large">search</el-button>
 </div>
 <div class="tags">
-    <el-tag type="primary" @click="handleClick" >Tag 1</el-tag>
-    <el-tag type="success">Tag 2</el-tag>
-    <el-tag type="info">Tag 3</el-tag>
-    <el-tag type="warning">Tag 4</el-tag>
-    <el-tag type="danger">Tag 5</el-tag>
+    <el-tag type="primary" @click="handleClick" >JAVA</el-tag>
+    <el-tag type="success">C++</el-tag>
+    <el-tag type="info">Python</el-tag>
+    <el-tag type="warning">Dart</el-tag>
+    <el-tag type="danger">Golang</el-tag>
   </div>
 </template>
 

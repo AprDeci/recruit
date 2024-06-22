@@ -6,6 +6,7 @@ import { CompanyListService } from '../../api/company';
 import { useWindowScroll } from '@vueuse/core'
 import card from '@/components/home/zujian/card.vue'
 import { BMap } from 'vue3-baidu-map-gl'
+import { useRouter } from 'vue-router';
 const { x, y } = useWindowScroll()
 const props = defineProps({
 type:{
@@ -14,6 +15,8 @@ type:{
   },
 id:String
 })
+const router=useRouter()
+const loading=ref(true)
 const activename=ref('company')
 const currentjobinfo=ref({})
 const page = ref(1)
@@ -49,20 +52,24 @@ onMounted(()=>{
     
 })
 const changepage=(currentPage,pageSize)=>{
+
     console.log(currentPage,pageSize)
     getinfoBypageByjobcompanyid(props.id,pageSize,currentPage).then(res=>{
         if(res.code===200){
             joblist.value=res.data.data
             total = res.data.total
+
         }else{
             ElMessage.error(res.msg)
         }
     })
 }
 const getjobinfo=(id)=>{
+    loading.value=true
     getjobinfobyidService(id).then(res=>{
         if(res.code===200){
             currentjobinfo.value=res.data
+            loading.value=false
         }else{
             ElMessage.error(res.msg)
         }
@@ -72,58 +79,71 @@ const getjobinfo=(id)=>{
 
 <template>
     <div class="jobselect_container">
-<el-scrollbar height="860px" class="jobselector" ref="scrollMenuRef">
-<jobcard class="jobcard" v-for="(item,index) in joblist" :key="index" :job="item" @click="getjobinfo(item.id)"></jobcard>
-<el-pagination
-    size="small"
-    background
-    layout="prev, pager, next"
-    :total="total"
-    v-model="page"
-    @change="changepage"
-  />
-</el-scrollbar>
-
-<card class="infocard" style="height: 860px; padding: 20px 30px;"> 
-    <div class="infohead">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; ">
-            <div>
-            <span style="font-size: 22px; font-weight: bold;margin-right: 16px;">{{ currentjobinfo.title }}</span>
-            <span style="color:var(--salary-color) ; font-size: 20px;font-weight: bold;">{{ currentjobinfo.maxSalary }}</span>
-            </div>
-            <div >
-                <el-button plain style="padding: 10px 30px;">感兴趣</el-button>
-                <el-button type="primary" plain>立即沟通</el-button>
-            </div>
-        </div>
-        <div class="smallinfo">
-            <i style="color:var(--pink);font-size: 16px;" class="iconfont">&#xe6db;</i><span>{{ currentjobinfo.location }}</span>
-        </div>
-    </div>
-    <hr style="opacity: 0.2; margin: 10px 0;">
-    <el-scrollbar height="740px">
-    <div class="describtion">
-        <div style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">职位描述</div>
-        <div>
-            {{ currentjobinfo.description }}
-        </div>
-            <hr style="opacity: 0.2; margin: 10px 0;">
-            <div  style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">
-                工作地址
-            </div>
-            <div>
-                    <BMap
-                    ak="TqYwwFNTRV7P6mDcejCVaftVKxJRp1Ua"
-                    mapStyleId="ee66c61531e8df3c2fd0374e96e58e81"
-                    :center="currentjobinfo.location"
-                    :zoom="19"
-                    tilt="75"
-                    height="200px"
-                    />
+        <el-scrollbar height="860px" class="jobselector" ref="scrollMenuRef">
+        <jobcard class="jobcard" v-for="(item,index) in joblist" :key="index" :job="item" @click="getjobinfo(item.id)"></jobcard>
+        <el-pagination
+            size="small"
+            background
+            layout="prev, pager, next"
+            :total="total"
+            v-model="page"
+            @change="changepage"
+        />
+        </el-scrollbar>
+        <card class="infocard" style="height: 860px; padding: 20px 30px;"> 
+            <el-skeleton :loading="loading" :throttle="500"  style="width: 100%; height: 860px;"animated :rows="20">
+                <template #template>
+                    <el-skeleton-item variant="h3" style="width: 30%;margin-bottom: 10px;" />
+                    <el-skeleton-item v-for="i in 10" variant="text" style="margin-right: 16px;height: 20px;margin-bottom: 10px;"  />
+                    <el-skeleton-item variant="h3" style="width: 30%" />
+                    <el-skeleton-item v-for="i in 6" variant="text" style="margin-right: 16px;height: 20px;margin-bottom: 10px;"  />
+                    <el-skeleton-item variant="image" style="width: 100%;height: 200px;" />
+                </template>
+                <template #default>
+            <div class="infohead">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px; ">
+                    <div>
+                    <span style="font-size: 22px; font-weight: bold;margin-right: 16px;">{{ currentjobinfo.title }}</span>
+                    <span style="color:var(--salary-color) ; font-size: 20px;font-weight: bold;">{{ currentjobinfo.maxSalary }}</span>
+                    </div>
+                    <div >
+                        <el-button plain style="padding: 10px 30px;"><i class="iconfont">&#xe600;</i>感兴趣</el-button>
+                        <el-button color="#945befb7" plain>立即沟通</el-button>
+                    </div>
                 </div>
-        </div>
-    </el-scrollbar>
-</card>
+                <div class="smallinfo">
+                    <i style="color:var(--pink);font-size: 16px;" class="iconfont">&#xe6db;</i><span>{{ currentjobinfo.location }}</span>
+                </div>
+            </div>
+            <hr style="opacity: 0.2; margin: 10px 0;">
+            <el-scrollbar height="740px">
+            <div class="describtion">
+                <div style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">职位描述</div>
+                <div>
+                    {{ currentjobinfo.description }}
+                </div>
+                    <hr style="opacity: 0.2; margin: 10px 0;">
+                    <div  style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">
+                        工作地址
+                    </div>
+                    <div>
+                            <BMap
+                            ak="TqYwwFNTRV7P6mDcejCVaftVKxJRp1Ua"
+                            mapStyleId="ee66c61531e8df3c2fd0374e96e58e81"
+                            :center="currentjobinfo.location"
+                            :zoom="19"
+                            tilt="75"
+                            height="200px"
+                            />
+                        </div>
+                </div>
+                <div style="display: flex; justify-content: center; margin:20px 20px;">
+                    <el-button @click="router.push('/job_detail/' + currentjobinfo.id)" plain >查看详情</el-button>
+                </div>
+            </el-scrollbar>
+        </template>
+        </el-skeleton>
+        </card>
 </div>
 <div>
     <card class="company_receommend" style="height: 200px; padding: 20px 30px;">

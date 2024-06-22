@@ -6,7 +6,6 @@ import jobsorts from "@/components/home/sort.vue"
 import adcard from "@/components/home/adcard.vue"
 import hotposition from "@/components/home/hotposition.vue"
 import hotcompany from "@/components/home/hotcompany.vue"
-
 import foot from "@/components/footer.vue"
 
 // 实现el-header吸顶效果

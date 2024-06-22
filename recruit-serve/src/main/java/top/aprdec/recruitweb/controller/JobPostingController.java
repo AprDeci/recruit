@@ -126,6 +126,13 @@ public class JobPostingController {
         List<JobTypeUtil.JobType> result = JobTypeUtil.getJobTypeList(types,list);
         return ResultData.success(result);
     }
+    @GetMapping("/gettypes")
+    public ResultData gettypes(){
+        List<JobPosting> list=jobPostingService.list();
+        List<String> types = list.stream().map(JobPosting::getType).distinct().toList();
+        List<JobTypeUtil.JobType> result = JobTypeUtil.getJobTypeList(types,list);
+        return ResultData.success(result);
+    }
 
     @GetMapping("/getinfoBypageBycompanyid/{companyid}")
     public ResultData getinfoBypageByjobid(@PathVariable("companyid")int companyid,@RequestParam("size")int size,@RequestParam("page")int page){

@@ -1,16 +1,16 @@
 <template>
     <el-card class="adcardcontianer" style="width: 870px;height: 400px;" body-class='bodyClass'>
         <el-card  class="adcard" shadow="hover">
-            <img style="height: 266.66px;"src="https://img.bosszhipin.com/beijin/activity/img/20240221/488f35070cc7d0b69dc062f990bbd71bccc41632c9c835a480c0fe17b37418f00945b742138a9e17.png.webp" alt="">
+            <img style="height: 266.66px;"src="@/imgs/ad1.webp" alt="">
         </el-card>
         <el-card  class="adcard" shadow="hover">
-            <img style="height: 266.66px;" src="https://img.bosszhipin.com/beijin/activity/img/20240222/488f35070cc7d0b64964b50b0e6addabfb3df6182506fd7a80c0fe17b37418f00945b742138a9e17.png.webp" alt="">
+            <img style="height: 266.66px;" src="@/imgs/ad2.webp" alt="">
         </el-card>
         <el-card  class="adcard" shadow="hover">
-            <img style="height: 133.33px;" src="https://img.bosszhipin.com/beijin/activity/img/20240222/488f35070cc7d0b6e7d068d9b8f96584408f60dcb37df3cd80c0fe17b37418f00945b742138a9e17.png.webp" alt="">
+            <img style="height: 133.33px;" src="@/imgs/ad3.webp" alt="">
         </el-card>
         <el-card  class="adcard" shadow="hover">
-            <img style="height: 133.33px;" src="https://img.bosszhipin.com/beijin/activity/img/20240228/488f35070cc7d0b6d0945cbd3f9c51073ac02fecc9479e3780c0fe17b37418f00945b742138a9e17.png.webp" alt="">
+            <img style="height: 133.33px;" src="@/imgs/ad4.webp" alt="">
         </el-card>
     </el-card>
 </template>

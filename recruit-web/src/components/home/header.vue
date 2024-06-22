@@ -36,15 +36,15 @@ const logout = ()=>{
       router
     >
     <div class="logo">
-      <el-menu-item index="0">
+      <el-menu-item index="/">
         <img src="@/imgs/logo.png" alt="logo" width="200px" height="60px">
       </el-menu-item>
     </div>
 
       <div class="center">  
         <el-menu-item index="/"><span>首页</span></el-menu-item>
-      <el-menu-item index="/about"><span>关于我们</span></el-menu-item>
-      <el-menu-item index="/contact"><span>联系我们</span></el-menu-item>
+        <el-menu-item index="/company/jobs/1/type"><span>热门企业</span></el-menu-item>
+        <el-menu-item index="/job_detail/39"><span>热门工作</span></el-menu-item>
     </div>
       <el-menu-item index="/login" v-if="isgoin"><span>登陆/注册</span></el-menu-item>
       <el-menu-item  v-else>

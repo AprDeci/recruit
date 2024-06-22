@@ -38,7 +38,7 @@ onMounted(()=>{
     <div class="linkmeanu" style="margin-top: 10px;">
             <div class="linkemeanu_container" style="display: flex;">
                 <router-link :to="'/company/info/'+id">公司简介</router-link>
-                <router-link :to="'/company/jobs/'+id">招聘职位</router-link>
+                <router-link :to="'/company/jobs/'+id+'/type/'">招聘职位</router-link>
             </div>
     </div>
     <div>

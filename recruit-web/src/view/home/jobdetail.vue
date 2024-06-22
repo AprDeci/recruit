@@ -66,7 +66,7 @@ const toCompanyInfo=(id)=>{
         <span>{{ jobinfo.job_location }}</span>
     </div>
     <div class="topinfobuttons">
-        <el-button style="background-color: rgba(0, 0, 0, 0.3); border: var(--ppcolor) 1.5px solid; color: white; " type="primary" plain><el-icon style="margin-right: 5px;"><Star /></el-icon>感兴趣</el-button>
+        <el-button color="#945bef" style="background-color: #eadfffe0;" type="primary" plain><el-icon style="margin-right: 5px;"><Star /></el-icon>感兴趣</el-button>
         <el-button type="primary">立即沟通</el-button>
     </div>
 </div>
