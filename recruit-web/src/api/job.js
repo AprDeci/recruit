@@ -28,3 +28,18 @@ export const getJobCompanyByRandomService = (limit)=>{
 export const getJobCompanyByIdService = (id)=>{
     return request.get('/jobPosting/getjcDto/'+id)
 }
+export const getJobtypesByCompanyIdService = (id)=> {
+    return request.get('/jobPosting/gettypes/' + id)
+}
+export const getinfoBypageByjobcompanyid = (id,size,page,type)=>{
+    if(type===''){
+        return request.get('/jobPosting/getinfoBypageBycompanyid/'+id,{params:{size,page}})
+    }else{
+
+    return request.get('/jobPosting/getinfoBypageBycompanyidBytype/'+id,{params:{size,page,type}})
+    }
+    
+}
+export const getjobinfobyidService = (id)=>{
+    return request.get('/jobPosting/getjobinfo/'+id)
+}

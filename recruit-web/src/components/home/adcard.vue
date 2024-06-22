@@ -19,13 +19,13 @@
 .adcardcontianer{
     border-radius: 12px;
 }
-.adcardcontianer :deep .bodyClass {
+.adcardcontianer :deep( .bodyClass ){
   display: grid;
   grid-template-columns: 2fr 1fr;
   grid-template-rows:  266.66px 133.33px;
   padding: 0;
 }
-.el-card :deep .el-card__body {
+.el-card :deep(.el-card__body) {
   padding: 0;
 cursor: pointer;
 }

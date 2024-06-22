@@ -3,6 +3,7 @@ import { onMounted,ref ,onUnmounted,watch} from 'vue';
 import headmenu from '../../components/home/header.vue';
 import {getJobCompanyByIdService,getJobCompanyByRandomService} from '@/api/job'
 import { BMap } from 'vue3-baidu-map-gl'
+import { useWindowScroll } from '@vueuse/core'
 import foot from "@/components/footer.vue"
 const props = defineProps({
     id:String
@@ -10,25 +11,28 @@ const props = defineProps({
 const jobinfo=ref({})
 const job_related_info=ref([])
 
-const y = ref(0)
-const scrollTop = ()=>{
-  y.value = document.documentElement.scrollTop
-}
+const { x, y } = useWindowScroll()
+watch(y, () => {
+    if (y.value > 400) {
+        cansee.value = false
+    } else {
+        cansee.value = true
+    }
+})
+const cansee=ref(true)
+
+
 onMounted( async()=>{
     await getJobCompanyByIdService(props.id).then(res=>{
         jobinfo.value=res.data
     })
-
     await getJobCompanyByRandomService(5).then(res=>{
         job_related_info.value=res.data
     })
-    window.addEventListener('scroll', scrollTop)
+
 })
 
 
-onUnmounted(() => { 
-  window.removeEventListener('scroll', scrollTop) 
-  })
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
@@ -45,8 +49,8 @@ const toCompanyInfo=(id)=>{
 
 <template>
 <headmenu></headmenu>
-<div class="topinfo" :class="{'topinfofixed':y>400}">
-    <div :class="{'topmove':y>400}">
+<div class="topinfo" :class="{'topinfofixed':!cansee}" ref="box">
+    <div :class="{'topmove':!cansee}">
     <div class="div1">最新</div>
     <div class="titlesalarytag">
         <div>
@@ -178,13 +182,15 @@ const toCompanyInfo=(id)=>{
     height: 235px;
     padding: 20px 70px;
     color: white;
+
+
 }
 
 .topinfofixed{
     position: fixed;
     top: 0;
     height: 190px;
-    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s;
+    z-index: 2;
 }
 
 .topmove{

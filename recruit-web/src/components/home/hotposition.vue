@@ -18,7 +18,7 @@ onMounted(()=>{
     <div>
         <el-tabs v-model="activeName" @tab-click="handleClick" >
         <el-tab-pane label="User" name="first" class="cardcontainer">
-            <hotcard v-for="item in jobList" key="job.id" :job=item></hotcard>
+            <hotcard @click="$router.push({path:`/job_detail/${item.job_id}`})" v-for="item in jobList" key="job.id" :job=item></hotcard>
         </el-tab-pane>
     </el-tabs>
     <div class="morebuttondiv"><el-button plain color="#626aef" size="larger" style="padding: 0 50px; height: 50px; font-weight: bold; color: #626aef;">查看更多</el-button></div>

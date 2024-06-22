@@ -10,12 +10,12 @@ const tags=ref([])
 const salary=ref('')
 
 const gettags = ()=>{
-   const requirements = props.job.job_requirements;
+   const requirements = props.job.requirements;
    const requirementArray = requirements.split(',');
    tags.value = requirementArray;
 const maxSalary = Math.floor(props.job.maxSalary/ 1000) ;
 const minSalary = Math.floor(props.job.minSalary/ 1000) ;
-const salaryRange = `${maxSalary}K-${minSalary}K`;
+const salaryRange = `${minSalary}K-${maxSalary}K`;
 salary.value = salaryRange;
 }
 
@@ -29,11 +29,11 @@ onMounted(()=>{
 
 <template>
     <el-card shadow="hover" style="cursor: pointer;" >
-        <div class="nameandsalary"><span class="name">{{ job.job_title }}</span><span class="salary">{{ salary }}</span></div>
+        <div class="nameandsalary"><span class="name">{{ job.title }}</span><span class="salary">{{ salary }}</span></div>
             <el-tag color="#fff" size="small" v-for="tag in tags" :key="tag">{{tag}}</el-tag>
         <template #footer>
-            <div class="foot" style="display: flex; justify-content: space-between;"><span class="footertext">{{ job.company_name }}</span>
-            <span class="footertext">{{ job.job_location }}</span>
+            <div class="foot" style="display: flex; justify-content: space-between;"><span class="footertext">待定</span>
+            <span class="footertext">{{ job.location }}</span>
             </div>
         </template>
     </el-card>

@@ -1,24 +1,37 @@
 <script setup>
+import { useRouter } from 'vue-router';
+const props= defineProps({
+    company: {
+        type: Object,
+        required: true
+    }
+})
+const router = useRouter()
+console.log(props.company)
 
+const gotopage=(id)=>{
+    router.push('/company/jobs/'+id+'/type/')
+}
+// 随机查询一个公司和与他相关联的工作
 </script>
 
 <template>
     <el-card>
         <template #header>
-            <div>企业名称</div>
+            <div>{{ company.company.name }}</div>
         </template>
-        <div class="com-positions" v-for="i in 3">
+        <div class="com-positions" v-for="job in company.jobs">
             <div class="simple-job-info">
                 <div class="nameandsalary">
-                <span class="name">高中兼职老师</span>
-                <span class="salary">90-100元/时</span>
+                <span class="name">{{ job.title }}</span>
+                <span class="salary">{{ job.minSalary }}</span>
             </div>
             <el-tag  color="#fff" size="small">郑州金水区FFF区</el-tag>
             <el-tag color="#fff" size="small">经验不限</el-tag>
             <el-tag color="#fff" size="small">本科</el-tag>
             </div>
         </div>
-        <div class="btcon"><el-button plain type="primary" color="#626aef" style="padding: 0 40px;">更多职位</el-button> </div>
+        <div class="btcon"><el-button plain type="primary" color="#626aef" style="padding: 0 40px;" @click="gotopage(company.company.id)">更多职位</el-button> </div>
     </el-card> 
 </template>
 

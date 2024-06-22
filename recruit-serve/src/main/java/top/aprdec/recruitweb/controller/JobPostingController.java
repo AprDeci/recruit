@@ -17,6 +17,7 @@ import top.aprdec.recruitweb.pojo.JobPosting;
 import top.aprdec.recruitweb.pojo.ResultData;
 import top.aprdec.recruitweb.service.JobPostingService;
 import top.aprdec.recruitweb.util.DTOUtil;
+import top.aprdec.recruitweb.util.JobTypeUtil;
 import top.aprdec.recruitweb.util.ThreadLocalUtil;
 
 import javax.xml.transform.Result;
@@ -114,6 +115,46 @@ public class JobPostingController {
         JobCompanyDTO jcdto = jobPostingMapper.getJobAndCompanyById(id);
         DTOUtil.JobCompanyDTOinitst(jcdto);
         return ResultData.success(jcdto);
+    }
+    @GetMapping("/gettypes/{companyId}")
+    public ResultData gettypes(@PathVariable("companyId")int companyId){
+        QueryWrapper<JobPosting> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("company_id", companyId).select("type");
+//只查询jobposting的type属性
+        List<JobPosting> list=jobPostingService.list(queryWrapper);
+        List<String> types = list.stream().map(JobPosting::getType).distinct().toList();
+        List<JobTypeUtil.JobType> result = JobTypeUtil.getJobTypeList(types,list);
+        return ResultData.success(result);
+    }
+
+    @GetMapping("/getinfoBypageBycompanyid/{companyid}")
+    public ResultData getinfoBypageByjobid(@PathVariable("companyid")int companyid,@RequestParam("size")int size,@RequestParam("page")int page){
+        QueryWrapper<JobPosting> queryWrapper = new QueryWrapper<>();
+        IPage<JobPosting> Page=new Page<>(page,size);
+        queryWrapper.eq("company_id", companyid);
+        IPage<JobPosting> jobpage = jobPostingService.page(Page,queryWrapper);
+        List<JobPosting> list = jobpage.getRecords();
+        long total = jobpage.getTotal();
+        return ResultData.success(new PageDto<>(total, list));
+    }
+//    根据类型限制
+    @GetMapping("/getinfoBypageBycompanyidBytype/{companyid}")
+    public ResultData getinfoBypageByjobidBytype(@PathVariable("companyid")int companyid,@RequestParam("size")int size,@RequestParam("page")int page,@RequestParam("type")String type){
+        QueryWrapper<JobPosting> queryWrapper = new QueryWrapper<>();
+        IPage<JobPosting> Page=new Page<>(page,size);
+        queryWrapper.eq("company_id", companyid);
+        //        处理type转换为字符
+        queryWrapper.eq("type",JobTypeUtil.getJobTypeByJobId(type));
+        IPage<JobPosting> jobpage = jobPostingService.page(Page,queryWrapper);
+        List<JobPosting> list = jobpage.getRecords();
+        long total = jobpage.getTotal();
+        return ResultData.success(new PageDto<>(total, list));
+    }
+
+    @GetMapping("/getjobinfo/{jid}")
+    public ResultData getjobinfo(@PathVariable("jid")int jid){
+        JobPosting jobPosting = jobPostingService.getById(jid);
+        return ResultData.success(jobPosting);
     }
 
 }

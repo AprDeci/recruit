@@ -30,10 +30,13 @@ public interface JobPostingMapper extends BaseMapper<JobPosting> {
     List<JobPosting> getJobListByuid(Integer id);
 
 
+
     @Select("SELECT * FROM job_posting ORDER BY RAND() LIMIT #{limit}")
     List<JobPosting> getJobListByRandom(int limit);
 
 
+    @Select("SELECT * FROM job_posting WHERE company_id = #{id} ORDER BY RAND() LIMIT #{limit}")
+    List<JobPosting> getJobListByRandomByCompanyid(int id,int limit);
 
 
     @Results({

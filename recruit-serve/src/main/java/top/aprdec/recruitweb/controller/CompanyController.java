@@ -1,18 +1,20 @@
 package top.aprdec.recruitweb.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import top.aprdec.recruitweb.DTO.CompanyWithJobsDTO;
+import top.aprdec.recruitweb.mapper.CompanyMapper;
 import top.aprdec.recruitweb.mapper.EmployerMapper;
+import top.aprdec.recruitweb.mapper.JobPostingMapper;
 import top.aprdec.recruitweb.pojo.Company;
+import top.aprdec.recruitweb.pojo.JobPosting;
 import top.aprdec.recruitweb.pojo.ResultData;
 import top.aprdec.recruitweb.service.CompanyService;
 import top.aprdec.recruitweb.service.EmployerService;
 import top.aprdec.recruitweb.util.ThreadLocalUtil;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,6 +34,7 @@ public class CompanyController {
     CompanyService companyService;
     @Autowired
     EmployerMapper employerMapper;
+
     @GetMapping("/info")
     public ResultData Companyinfo(){
         Map<String,Object> claims= ThreadLocalUtil.get();
@@ -41,4 +44,26 @@ public class CompanyController {
 
     }
 
+    @GetMapping("/randomlistwithjobs")
+    public ResultData randomlistwithjobs(){
+        List<CompanyWithJobsDTO> list=companyService.getCompanyWithJobs();
+        return ResultData.success(list);
+    }
+
+    @GetMapping("/list/{num}")
+    public ResultData list(@PathVariable("num") int num){
+        List<Company> list = companyService.list();
+        if (num==0){
+            return ResultData.success(list);
+        }
+        list = list.subList(0, num);
+        return ResultData.success(list);
+    }
+
+    @GetMapping("/info/{companyid}")
+    public ResultData info(@PathVariable("companyid") int companyid){
+        Company company = companyService.getById(companyid);
+        return ResultData.success(company);
+
+    }
 }

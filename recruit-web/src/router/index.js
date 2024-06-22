@@ -15,6 +15,34 @@ export const fixedRouter = [
         props:true
     },
     {
+        path: '/company/',
+        name: 'company',
+        component: () => import('../view/home/company.vue'),
+        props:true,
+        children:[
+            {
+                path: 'jobs/:id',
+                name: 'companyjob',
+                component: () => import('../view/home/companyjob.vue'),
+                props:true,
+                children:[
+                    {
+                    path:'type/:type?',
+                    name:'companyjobtype',
+                    component: () => import('../view/home/companyjobtype.vue'),
+                    props:true
+                }
+            ]
+            },
+            {
+                path:'info/:id',
+                name:'companyinfo',
+                component: () => import('../view/home/companyinfo.vue'),
+                props:true
+            }
+        ]
+    },
+    {
         path:'/login',
         name:'login',
         component: () => import('../view/login/login.vue')
