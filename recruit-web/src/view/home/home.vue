@@ -33,9 +33,10 @@ onUnmounted(() => {
             <el-row><div class="headpic">
               <img id="headpic" src="@/imgs/backimg.png">
             </div></el-row>
-            <el-row>
+
+              <div>
                 <searchinput></searchinput>
-            </el-row>
+              </div>
             <div class="main inner">
             <div class="sortads">
             <div class="sort" style="margin-right: 10px;"><jobsorts/></div>

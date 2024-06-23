@@ -45,6 +45,7 @@ const logout = ()=>{
         <el-menu-item index="/"><span>首页</span></el-menu-item>
         <el-menu-item index="/company/jobs/1/type"><span>热门企业</span></el-menu-item>
         <el-menu-item index="/job_detail/39"><span>热门工作</span></el-menu-item>
+        <el-menu-item index="/search?query="><span>搜索</span></el-menu-item>
     </div>
       <el-menu-item index="/login" v-if="isgoin"><span>登陆/注册</span></el-menu-item>
       <el-menu-item  v-else>

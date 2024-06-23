@@ -46,3 +46,6 @@ export const getjobinfobyidService = (id)=>{
 export const getjobtypes=()=>{
     return request.get('/jobPosting/gettypes')
 }
+export const searchjobList=(key,size,page)=>{
+    return request.get('/jobPosting/searchList',{params:{key,size,page}})
+}

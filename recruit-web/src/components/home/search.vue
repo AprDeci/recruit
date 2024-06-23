@@ -1,3 +1,13 @@
+<script setup>
+import { ref } from 'vue';
+import {useRouter} from 'vue-router'
+const router=useRouter()
+
+const input = ref('');
+const search=()=>{
+    router.push({path:'/search',query:{query:input.value}})
+}
+</script>
 <template>
     <div>
     <el-input
@@ -7,8 +17,9 @@
     size="large"
     placeholder="输入想要的工作"
     clearable
+    @keydown.enter="search"
     />
-    <el-button style="padding: 25px 40px; position: relative; bottom: 4px; right: 10px;" color="#626aef" size="large">search</el-button>
+    <el-button style="padding: 25px 40px; position: relative; bottom: 4px; right: 10px;" color="#626aef" size="large" @click='search' >search</el-button>
 </div>
 <div class="tags">
     <el-tag type="primary" @click="handleClick" >JAVA</el-tag>
@@ -21,7 +32,6 @@
 
 <style scoped>
     div{
-        width: 100vw;
         display: flex;
         justify-content: center;
         align-items: center;

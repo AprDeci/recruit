@@ -59,7 +59,12 @@ export const fixedRouter = [
         meta:{
             title:'后台管理',
         },
-
+    },
+    {
+        path:'/search',
+        name:'search',
+        component: () => import('../view/home/search.vue'),
+        props:route=>({query:route.query.query})
     },
 ]
 

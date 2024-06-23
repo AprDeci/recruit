@@ -164,4 +164,21 @@ public class JobPostingController {
         return ResultData.success(jobPosting);
     }
 
+    @GetMapping("/searchList")
+    public ResultData searchList(@RequestParam("key")String key,@RequestParam("size")int size,@RequestParam("page")int page){
+        QueryWrapper<JobPosting> queryWrapper = new QueryWrapper<>();
+        IPage<JobPosting> Page=new Page<>(page,size);
+        if(key.isEmpty()){
+            IPage<JobPosting> jobpage = jobPostingService.page(Page);
+            List<JobPosting> list = jobpage.getRecords();
+            long total = jobpage.getTotal();
+            return ResultData.success(new PageDto<>(total, list));
+        }else {
+            queryWrapper.like("location", key).or().like("title", key).or().like("type", key).or().like("description", key);
+            IPage<JobPosting> jobpage = jobPostingService.page(Page, queryWrapper);
+            List<JobPosting> list = jobpage.getRecords();
+            long total = jobpage.getTotal();
+            return ResultData.success(new PageDto<>(total, list));
+        }
+    }
 }
