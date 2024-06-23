@@ -58,7 +58,7 @@ const logout = ()=>{
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item @click="router.push('/background')">个人中心</el-dropdown-item>
+            <el-dropdown-item @click="router.push('/background/'+userStore.role+'/user/info')">个人中心</el-dropdown-item>
             <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
