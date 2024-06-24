@@ -63,7 +63,9 @@ const getjobdetials = (id) => {
     cursor: pointer;
 }
 .foot{
-    width: 90%;
+    box-sizing: border-box;
+    left:0;
+    width: 100%;
     position: absolute;
     bottom: 0;
     padding: 10px;
@@ -71,6 +73,7 @@ const getjobdetials = (id) => {
     background:linear-gradient(90deg,#f5fcfc,#fcfbfa) ;
     border: 1px solid var(--card-color);
     box-shadow: 0 0 5px var(--card-color);
+    padding-left: 20px;
 }
 .foot span{
     margin-right:8px;

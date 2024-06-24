@@ -44,7 +44,11 @@ const toCompanyInfo=(id)=>{
     )
 
 }
-
+const gotoCompany=(id)=>{
+    router.push(
+        {path:'/company/jobs/'+id+'/type',}
+    )
+}
 </script>
 
 <template>
@@ -107,7 +111,7 @@ const toCompanyInfo=(id)=>{
                 <el-card>
                 <div style="font-size: 20px; font-weight: bold;margin-bottom: 10px;">公司地址</div>
                 <div style="margin-bottom: 5px; font-size: 12px;"><i style="color:var(--pink);font-size: 16px;" class="iconfont">&#xe6db;</i>{{ jobinfo.company_location }}</div>
-                <div>
+                <div style="padding-bottom: 20px;">
                     <BMap
                     ak="TqYwwFNTRV7P6mDcejCVaftVKxJRp1Ua"
                     mapStyleId="ee66c61531e8df3c2fd0374e96e58e81"
@@ -139,7 +143,12 @@ const toCompanyInfo=(id)=>{
                         <i class='iconfont'>&#xe7b9;</i>
                         {{ jobinfo.company_location}}
                     </div>
-                    <el-button plain >查看所有职位</el-button>
+                    <el-button plain  @click="gotoCompany(jobinfo.company_id)">查看该公司所有职位</el-button>
+                </div>
+            </el-card>
+            <el-card class="related-job-card">
+                <div class="container">
+                    <div style="margin-bottom: 20px; display: flex; justify-content: space-between;"><span>相似职位</span><span style="cursor:pointer; font-size: 15px; color: var(--ppcolor);">更多相似职位</span></div>
                 </div>
             </el-card>
             <el-card class="related-job-card">

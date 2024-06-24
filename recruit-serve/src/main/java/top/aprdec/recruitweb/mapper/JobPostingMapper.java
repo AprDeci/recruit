@@ -40,6 +40,7 @@ public interface JobPostingMapper extends BaseMapper<JobPosting> {
 
 
     @Results({
+            @Result(column = "company_id", property = "company_id"),
             @Result(column = "company_name", property = "company_name"),
             @Result(column = "company_description", property = "company_description"),
             @Result(column = "company_location", property = "company_location"),
@@ -54,11 +55,12 @@ public interface JobPostingMapper extends BaseMapper<JobPosting> {
             @Result(column = "job_type", property = "job_type"),
             @Result(column = "job_id", property = "job_id")
     })
-    @Select("SELECT c.name AS company_name, c.description AS company_description, c.location AS company_location, c.industry AS company_industry, j.title AS job_title, j.description AS job_description, j.requirements AS job_requirements, j.location AS job_location, j.posting_date AS job_postingDate, j.max_salary AS maxSalary, j.min_salary AS minSalary, j.type AS job_type, j.id AS job_id FROM job_posting j JOIN company c ON j.company_id = c.id  ORDER BY RAND() LIMIT #{limit}")
+    @Select("SELECT c.id AS company_id ,c.name AS company_name, c.description AS company_description, c.location AS company_location, c.industry AS company_industry, j.title AS job_title, j.description AS job_description, j.requirements AS job_requirements, j.location AS job_location, j.posting_date AS job_postingDate, j.max_salary AS maxSalary, j.min_salary AS minSalary, j.type AS job_type, j.id AS job_id FROM job_posting j JOIN company c ON j.company_id = c.id  ORDER BY RAND() LIMIT #{limit}")
     List<JobCompanyDTO> getJobAndCompanyByRandom(@Param("limit") int limit);
 
 
     @Results({
+            @Result(column = "company_id", property = "company_id"),
             @Result(column = "company_name", property = "company_name"),
             @Result(column = "company_description", property = "company_description"),
             @Result(column = "company_location", property = "company_location"),
@@ -73,7 +75,7 @@ public interface JobPostingMapper extends BaseMapper<JobPosting> {
             @Result(column = "job_type", property = "job_type"),
             @Result(column = "job_id", property = "job_id")
     })
-    @Select("SELECT c.name AS company_name, c.description AS company_description, c.location AS company_location, c.industry AS company_industry, j.title AS job_title, j.description AS job_description, j.requirements AS job_requirements, j.location AS job_location, j.posting_date AS job_postingDate, j.max_salary AS maxSalary, j.min_salary AS minSalary, j.type AS job_type, j.id AS job_id FROM job_posting j JOIN company c ON j.company_id = c.id WHERE j.id = #{jid}")
+    @Select("SELECT c.id AS company_id , c.name AS company_name, c.description AS company_description, c.location AS company_location, c.industry AS company_industry, j.title AS job_title, j.description AS job_description, j.requirements AS job_requirements, j.location AS job_location, j.posting_date AS job_postingDate, j.max_salary AS maxSalary, j.min_salary AS minSalary, j.type AS job_type, j.id AS job_id FROM job_posting j JOIN company c ON j.company_id = c.id WHERE j.id = #{jid}")
     JobCompanyDTO getJobAndCompanyById(@Param("jid")int jid);
 
 }
